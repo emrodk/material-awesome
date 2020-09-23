@@ -6,6 +6,10 @@ local hotkeys_popup = require('awful.hotkeys_popup').widget
 local modkey = require('configuration.keys.mod').modKey
 local altkey = require('configuration.keys.mod').altKey
 local apps = require('configuration.apps')
+
+-- Extension
+local traveler = require('libs.traveler')
+
 -- Key bindings
 local globalKeys =
   awful.util.table.join(
@@ -396,6 +400,23 @@ local globalKeys =
       awful.util.spawn_with_shell('ibus emoji')
     end,
     {description = 'Open the ibus emoji picker to copy an emoji to your clipboard', group = 'hotkeys'}
+  ),
+  -- Toggle tag on focused client.
+  awful.key(
+    {modkey,'Shift'},
+    'w',
+    function ()
+      traveler.MoveUp()
+    end,
+    {description = 'Move windows up', group = 'tag'}
+  ),
+  awful.key(
+    {modkey,'Shift'},
+    's',
+    function ()
+      traveler.MoveDown()
+    end,
+    {description = 'Move windows down', group = 'tag'}
   )
 )
 
@@ -411,7 +432,7 @@ for i = 1, 9 do
     descr_move = {description = 'move focused client to tag #', group = 'tag'}
     descr_toggle_focus = {description = 'toggle focused client on tag #', group = 'tag'}
   end
-  globalKeys =
+    globalKeys =
     awful.util.table.join(
     globalKeys,
     -- View tag only.
@@ -468,6 +489,7 @@ for i = 1, 9 do
       end,
       descr_toggle_focus
     )
+    
   )
 end
 
